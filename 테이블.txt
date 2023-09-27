@@ -1,0 +1,12 @@
+create table BOARD (
+    BOARD_ID int not null auto_increment primary key,
+    BOARD_TITLE varchar(30),
+    BOARD_CONTENT varchar(500),
+    REGISTER_ID varchar(20),
+    REGISTER_DATE DATETIME DEFAULT now(),
+    UPDATER_ID varchar(20),
+    UPDATER_DATE DATETIME DEFAULT now()
+);
+
+insert into BOARD (BOARD_TITLE, BOARD_CONTENTS, REGISTER_ID) values ("제목1","내용1"."hwang");
+insert into BOARD (BOARD_TITLE, BOARD_CONTENTS, REGISTER_ID) values ("제목2","내용2"."hwang");
