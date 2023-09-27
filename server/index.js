@@ -23,13 +23,35 @@ app.use(cors(corsOptions));
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
-app.get('/list',(req, res) => {
-    const sqlQuery = 
-    "SELECT BOARD_ID, BOARD_TITLE, REGISTER_ID, DATE_FORMAT(REGISTER_DATE, '%Y-%m-%d') AS RESISTER_DATE FROM BOARD;";
+app.get("/list", (req, res) => {
+    const sqlQuery = "SELECT BOARD_ID, BOARD_TITLE, REGISTER_ID, DATE_FORMAT(REGISTER_DATE, '%Y-%m-%d') AS REGISTER_DATE FROM BOARD;";
     db.query(sqlQuery, (err, result) => {
-    res.send(result);
+      res.send(result);
     });
-});
+  });
+
+app.post("/insert" , (req, res) => {
+  let title = req.body.title;
+  let content = req.body.content;
+  const sqlQuery =
+  "INSERT INTO BOARD (BOARD_TITLE, BOARD_CONTENT, REGISTER_ID) FROM (?,?,hwang);";
+  db.query(sqlQuery, [title, content],(err, result) =>{
+    res.send(result);
+  })
+})
+
+app.post("/update" , (req, res) => {
+  let id = req.body.id;
+  let title = req.body.title;
+  let content = req.body.content;
+  const sqlQuery =
+  "UPDATE BOARD SET BOARD_TITLE =?,BOARD_CONTENT=?,UPDATER_ID='hwang'WHERE BOARD_ID=?;";
+  db.query(sqlQuery, [title, content, id],(err, result) =>{
+    res.send(result);
+  })
+})
+
+
 
 app.listen(PORT, () => {
     console.log(`running on port${PORT}`);
@@ -43,4 +65,9 @@ Cross Origin Resource sharning에 약자
 리소스가 요청되는 경우를 말한다
 
 1)npm i cors 모듈설치
+
+sql?
+데이터베이스에서 데이터를 추출하고 조작하는데 사용하는 데이터 처리언어
+
+Structured Query Language
 */
